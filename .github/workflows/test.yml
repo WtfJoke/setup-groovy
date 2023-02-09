@@ -26,4 +26,5 @@ jobs:
       - uses: ./
         with:
           groovy-version: 4.0.9
-      # TODO: Print groovy version
+      - name: Display groovy version
+        run: groovy --version
