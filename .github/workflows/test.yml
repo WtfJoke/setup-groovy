@@ -1,0 +1,29 @@
+name: "CI"
+on:
+  pull_request:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: ".nvmrc"
+      - run: |
+          yarn install
+      - run: |
+          yarn all
+  test: # make sure the action works on a clean machine without building
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest, ubuntu-22.04]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./
+        with:
+          groovy-version: 4.0.9
+      # TODO: Print groovy version

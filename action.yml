@@ -1,0 +1,13 @@
+name: 'Setup Groovy'
+description: 'Sets up Groovy for Github Actions'
+author: 'WtfJoke (Manuel)'
+
+inputs:
+  groovy-version: 
+    description: 'The version of Groovy to install. Takes a whole or semver Groovy version'
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
+branding:
+  icon: star
+  color: blue
