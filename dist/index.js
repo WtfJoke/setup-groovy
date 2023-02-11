@@ -52,7 +52,6 @@ exports.fetchAvailableVersions = exports.isReleaseAvailable = void 0;
 const http_client_1 = __nccwpck_require__(6255);
 const core_1 = __nccwpck_require__(2186);
 const fast_xml_parser_1 = __nccwpck_require__(2603);
-const semver_1 = __nccwpck_require__(1383);
 const GROOVY_OLDER_RELEASES_URL = 'https://repo1.maven.org/maven2/org/codehaus/groovy/groovy/maven-metadata.xml';
 const GROOVY_CURRENT_URL = 'https://repo1.maven.org/maven2/org/apache/groovy/groovy/maven-metadata.xml';
 const http = new http_client_1.HttpClient('setup-groovy', undefined, {
@@ -61,9 +60,6 @@ const http = new http_client_1.HttpClient('setup-groovy', undefined, {
 });
 const parser = new fast_xml_parser_1.XMLParser();
 const isReleaseAvailable = (version) => __awaiter(void 0, void 0, void 0, function* () {
-    if (!(0, semver_1.valid)(version)) {
-        throw new Error(`Invalid version '${version}'`);
-    }
     const versions = yield (0, exports.fetchAvailableVersions)();
     (0, core_1.debug)(`Available versions: ${JSON.stringify(versions)})`);
     const isVersionAvailable = versions.includes(version);
@@ -104,24 +100,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.downloadGroovy = exports.setupGroovy = void 0;
+exports.setupGroovyVersion = exports.setupGroovy = void 0;
 const core_1 = __nccwpck_require__(2186);
 const tool_cache_1 = __nccwpck_require__(7784);
+const semver_1 = __nccwpck_require__(1383);
 const release_1 = __nccwpck_require__(878);
 const GROOVY_BASE_URL = 'https://groovy.jfrog.io/artifactory/dist-release-local/groovy-zips';
+const FIRST_APACHE_GROOVY_VERSION = '2.4.4';
 const setupGroovy = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const version = (0, core_1.getInput)('groovy-version');
-        (0, core_1.debug)(`Fetching groovy releases for Groovy version '${version}'`);
-        const isVersionAvailable = yield (0, release_1.isReleaseAvailable)(version);
-        if (!isVersionAvailable) {
-            throw new Error(`Unable to find Groovy version '${version}'`);
-        }
-        const url = `${GROOVY_BASE_URL}/apache-groovy-sdk-${version}.zip`;
-        const groovyRootPath = yield (0, exports.downloadGroovy)(url);
-        const groovyPath = `${groovyRootPath}/groovy-${version}/bin`;
-        (0, core_1.debug)(`Adding '${groovyPath}' to PATH`);
-        (0, core_1.addPath)(groovyPath);
+        return yield (0, exports.setupGroovyVersion)(version);
     }
     catch (error) {
         if (error instanceof Error || typeof error === 'string') {
@@ -131,17 +120,41 @@ const setupGroovy = () => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.setupGroovy = setupGroovy;
+const setupGroovyVersion = (version) => __awaiter(void 0, void 0, void 0, function* () {
+    (0, core_1.debug)(`Fetching groovy releases for Groovy version '${version}'`);
+    const isVersionAvailable = yield (0, release_1.isReleaseAvailable)(version);
+    if (!isVersionAvailable) {
+        throw new Error(`Unable to find Groovy version '${version}'`);
+    }
+    const groovyBinaryFileName = getFileName(version);
+    const url = `${GROOVY_BASE_URL}/${groovyBinaryFileName}`;
+    const groovyRootPath = yield downloadGroovy(url);
+    const groovyBinaryPath = `${groovyRootPath}/groovy-${version}/bin`;
+    (0, core_1.debug)(`Adding '${groovyBinaryPath}' to PATH`);
+    (0, core_1.addPath)(groovyBinaryPath);
+    return groovyBinaryPath;
+});
+exports.setupGroovyVersion = setupGroovyVersion;
+const getFileName = (version) => {
+    const parsedVersion = (0, semver_1.coerce)(version);
+    const oldGroovyFileName = `groovy-binary-${version}.zip`;
+    const newGroovyFileName = `apache-${oldGroovyFileName}`;
+    if (!parsedVersion || (0, semver_1.lt)(parsedVersion, FIRST_APACHE_GROOVY_VERSION)) {
+        (0, core_1.debug)(`Version ${version} lower than ${FIRST_APACHE_GROOVY_VERSION} or not parsable, use old groovy file name`);
+        return oldGroovyFileName;
+    }
+    return newGroovyFileName;
+};
 const downloadGroovy = (url) => __awaiter(void 0, void 0, void 0, function* () {
     (0, core_1.debug)(`Downloading groovy from url '${url}'`);
     const archivePath = yield (0, tool_cache_1.downloadTool)(url);
     const groovyPath = yield (0, tool_cache_1.extractZip)(archivePath);
-    (0, core_1.debug)(`Groovy path is ${groovyPath}`);
+    (0, core_1.debug)(`Extracted groovy zip to: ${groovyPath}`);
     if (!archivePath || !groovyPath) {
         throw new Error(`Unable to download groovy from ${url}`);
     }
     return groovyPath;
 });
-exports.downloadGroovy = downloadGroovy;
 
 
 /***/ }),
