@@ -18,7 +18,7 @@ This action can be run on `ubuntu-latest`, `windows-latest`, and `macos-latest` 
 
 ```yml
 steps:
-  - uses: wtfjoke/setup-groovy@main
+  - uses: wtfjoke/setup-groovy@v1
     with:
       groovy-version: '4.0.9'
   - run: groovy --version
