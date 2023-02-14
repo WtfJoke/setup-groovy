@@ -1,7 +1,7 @@
 import {getInput, debug, addPath, error as coreError} from '@actions/core'
 import {downloadTool, extractZip} from '@actions/tool-cache'
 import {coerce, lt} from 'semver'
-import {isReleaseAvailable} from './release'
+import {getMatchingVersion} from './release'
 
 const GROOVY_BASE_URL =
   'https://groovy.jfrog.io/artifactory/dist-release-local/groovy-zips'
@@ -20,15 +20,14 @@ export const setupGroovy = async () => {
 }
 
 export const setupGroovyVersion = async (version: string) => {
-  debug(`Fetching groovy releases for Groovy version '${version}'`)
-  const isVersionAvailable = await isReleaseAvailable(version)
-  if (!isVersionAvailable) {
-    throw new Error(`Unable to find Groovy version '${version}'`)
+  const matchingVersion = await getMatchingVersion(version)
+  if (!matchingVersion) {
+    throw new Error(`Unable to find matching Groovy version for: '${version}'`)
   }
-  const groovyBinaryFileName = getFileName(version)
+  const groovyBinaryFileName = getFileName(matchingVersion)
   const url = `${GROOVY_BASE_URL}/${groovyBinaryFileName}`
   const groovyRootPath = await downloadGroovy(url)
-  const groovyBinaryPath = `${groovyRootPath}/groovy-${version}/bin`
+  const groovyBinaryPath = `${groovyRootPath}/groovy-${matchingVersion}/bin`
   debug(`Adding '${groovyBinaryPath}' to PATH`)
   addPath(groovyBinaryPath)
   return groovyBinaryPath

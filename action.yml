@@ -4,7 +4,8 @@ author: 'WtfJoke (Manuel)'
 
 inputs:
   groovy-version: 
-    description: 'The version of Groovy to install. Takes a whole or semver Groovy version'
+    description: 'The version of Groovy to install. Exact version or version range of Groovy. Using semver version range syntax. Examples: 4.x, 4.0.x, 4.0.9, 4.0.0-rc-1, etc.'
+    required: true
 runs:
   using: 'node16'
   main: 'dist/index.js'

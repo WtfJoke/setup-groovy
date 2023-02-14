@@ -20,6 +20,41 @@ This action can be run on `ubuntu-latest`, `windows-latest`, and `macos-latest` 
 steps:
   - uses: wtfjoke/setup-groovy@v1
     with:
-      groovy-version: '4.0.9'
+      groovy-version: '4.x'
   - run: groovy --version
+```
+
+## 📊 Supported version syntax
+
+If there is a specific version of Groovy that you need and you don't want to worry about any potential breaking changes due to patch updates (going from `4.0.8` to `4.0.9` for example), you should specify the **exact major, minor, and patch version** (such as `4.0.9`):
+
+```yaml
+steps:
+  - uses: actions/checkout@v3
+  - uses: wtfjoke/setup-groovy@v1
+    with:
+      groovy-version: '4.0.9'
+  - run: groovy HelloWorld.groovy
+```
+
+You can specify **only a major and minor version** if you are okay with the most recent patch version being used:
+
+```yaml
+steps:
+  - uses: actions/checkout@v3
+  - uses: wtfjoke/setup-groovy@v1
+    with:
+      groovy-version: '4.0'
+  - run: groovy HelloWorld.groovy
+```
+
+You can also use ranges that are specified in [semver](https://github.com/npm/node-semver#ranges), for example a [hypen-range](https://github.com/npm/node-semver#advanced-range-syntax):
+
+```yaml
+steps:
+  - uses: actions/checkout@v3
+  - uses: wtfjoke/setup-groovy@v1
+    with:
+      groovy-version: '>=3.x <4.0.0'
+  - run: groovy HelloWorld.groovy
 ```
