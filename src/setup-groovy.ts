@@ -50,12 +50,6 @@ const downloadGroovy = async (url: string) => {
   debug(`Downloading groovy from url '${url}'`)
   const archivePath = await downloadTool(url)
   const groovyPath = await extractZip(archivePath)
-
   debug(`Extracted groovy zip to: ${groovyPath}`)
-
-  if (!archivePath || !groovyPath) {
-    throw new Error(`Unable to download groovy from ${url}`)
-  }
-
   return groovyPath
 }
