@@ -1,6 +1,7 @@
 import {HttpClient} from '@actions/http-client'
 import {debug} from '@actions/core'
 import {XMLParser} from 'fast-xml-parser'
+import {maxSatisfying} from 'semver'
 
 const GROOVY_OLDER_RELEASES_URL =
   'https://repo1.maven.org/maven2/org/codehaus/groovy/groovy/maven-metadata.xml'
@@ -28,11 +29,13 @@ const http = new HttpClient('setup-groovy', undefined, {
 })
 const parser = new XMLParser()
 
-export const isReleaseAvailable = async (version: string) => {
+export const getMatchingVersion = async (
+  versionRange: string
+): Promise<string | null> => {
+  debug(`Fetching groovy releases for Groovy version '${versionRange}'`)
   const versions = await fetchAvailableVersions()
   debug(`Available versions: ${JSON.stringify(versions)})`)
-  const isVersionAvailable = versions.includes(version)
-  return isVersionAvailable
+  return maxSatisfying(versions, versionRange)
 }
 
 export const fetchAvailableVersions = async () => {

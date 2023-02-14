@@ -48,10 +48,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.fetchAvailableVersions = exports.isReleaseAvailable = void 0;
+exports.fetchAvailableVersions = exports.getMatchingVersion = void 0;
 const http_client_1 = __nccwpck_require__(6255);
 const core_1 = __nccwpck_require__(2186);
 const fast_xml_parser_1 = __nccwpck_require__(2603);
+const semver_1 = __nccwpck_require__(1383);
 const GROOVY_OLDER_RELEASES_URL = 'https://repo1.maven.org/maven2/org/codehaus/groovy/groovy/maven-metadata.xml';
 const GROOVY_CURRENT_URL = 'https://repo1.maven.org/maven2/org/apache/groovy/groovy/maven-metadata.xml';
 const http = new http_client_1.HttpClient('setup-groovy', undefined, {
@@ -59,13 +60,13 @@ const http = new http_client_1.HttpClient('setup-groovy', undefined, {
     maxRetries: 3
 });
 const parser = new fast_xml_parser_1.XMLParser();
-const isReleaseAvailable = (version) => __awaiter(void 0, void 0, void 0, function* () {
+const getMatchingVersion = (versionRange) => __awaiter(void 0, void 0, void 0, function* () {
+    (0, core_1.debug)(`Fetching groovy releases for Groovy version '${versionRange}'`);
     const versions = yield (0, exports.fetchAvailableVersions)();
     (0, core_1.debug)(`Available versions: ${JSON.stringify(versions)})`);
-    const isVersionAvailable = versions.includes(version);
-    return isVersionAvailable;
+    return (0, semver_1.maxSatisfying)(versions, versionRange);
 });
-exports.isReleaseAvailable = isReleaseAvailable;
+exports.getMatchingVersion = getMatchingVersion;
 const fetchAvailableVersions = () => __awaiter(void 0, void 0, void 0, function* () {
     const versionsPromise = fetchVersionsFromMavenMetadata(GROOVY_CURRENT_URL);
     const oldVersionsPromise = fetchVersionsFromMavenMetadata(GROOVY_OLDER_RELEASES_URL);
@@ -121,15 +122,14 @@ const setupGroovy = () => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.setupGroovy = setupGroovy;
 const setupGroovyVersion = (version) => __awaiter(void 0, void 0, void 0, function* () {
-    (0, core_1.debug)(`Fetching groovy releases for Groovy version '${version}'`);
-    const isVersionAvailable = yield (0, release_1.isReleaseAvailable)(version);
-    if (!isVersionAvailable) {
-        throw new Error(`Unable to find Groovy version '${version}'`);
+    const matchingVersion = yield (0, release_1.getMatchingVersion)(version);
+    if (!matchingVersion) {
+        throw new Error(`Unable to find matching Groovy version for: '${version}'`);
     }
-    const groovyBinaryFileName = getFileName(version);
+    const groovyBinaryFileName = getFileName(matchingVersion);
     const url = `${GROOVY_BASE_URL}/${groovyBinaryFileName}`;
     const groovyRootPath = yield downloadGroovy(url);
-    const groovyBinaryPath = `${groovyRootPath}/groovy-${version}/bin`;
+    const groovyBinaryPath = `${groovyRootPath}/groovy-${matchingVersion}/bin`;
     (0, core_1.debug)(`Adding '${groovyBinaryPath}' to PATH`);
     (0, core_1.addPath)(groovyBinaryPath);
     return groovyBinaryPath;

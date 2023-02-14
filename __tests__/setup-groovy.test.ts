@@ -2,7 +2,7 @@ import * as core from '@actions/core'
 import {existsSync} from 'fs'
 import {rm} from 'fs/promises'
 import path from 'path'
-import {setupGroovy, setupGroovyVersion} from '../src/setup-groovy'
+import {setupGroovy} from '../src/setup-groovy'
 
 const tempDir = path.join(__dirname, 'runner', 'temp')
 process.env['RUNNER_TEMP'] = tempDir
@@ -18,7 +18,7 @@ describe('setup-groovy', () => {
     jest.resetAllMocks()
   })
 
-  it.each(['4.0.9', '1.1-beta-2'])(
+  it.each(['4.0.9', '4.0.0-rc-2', '1.8.0-beta-1'])(
     "should setup groovy '%s'",
     async version => {
       const groovyExecutableFolderName = path.join(`groovy-${version}`, 'bin')
