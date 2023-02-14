@@ -1,6 +1,6 @@
 import {getInput, debug, addPath, error as coreError} from '@actions/core'
 import {downloadTool, extractZip} from '@actions/tool-cache'
-import {coerce, lt} from 'semver'
+import {lt} from 'semver'
 import {getMatchingVersion} from './release'
 
 const GROOVY_BASE_URL =
@@ -33,13 +33,12 @@ export const setupGroovyVersion = async (version: string) => {
   return groovyBinaryPath
 }
 
-const getFileName = (version: string) => {
-  const parsedVersion = coerce(version)
-  const oldGroovyFileName = `groovy-binary-${version}.zip`
+const getFileName = (matchingVersion: string) => {
+  const oldGroovyFileName = `groovy-binary-${matchingVersion}.zip`
   const newGroovyFileName = `apache-${oldGroovyFileName}`
-  if (!parsedVersion || lt(parsedVersion, FIRST_APACHE_GROOVY_VERSION)) {
+  if (lt(matchingVersion, FIRST_APACHE_GROOVY_VERSION)) {
     debug(
-      `Version ${version} lower than ${FIRST_APACHE_GROOVY_VERSION} or not parsable, use old groovy file name`
+      `Version ${matchingVersion} is lower than ${FIRST_APACHE_GROOVY_VERSION} use old groovy file name format.`
     )
     return oldGroovyFileName
   }
