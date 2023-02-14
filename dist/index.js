@@ -135,12 +135,11 @@ const setupGroovyVersion = (version) => __awaiter(void 0, void 0, void 0, functi
     return groovyBinaryPath;
 });
 exports.setupGroovyVersion = setupGroovyVersion;
-const getFileName = (version) => {
-    const parsedVersion = (0, semver_1.coerce)(version);
-    const oldGroovyFileName = `groovy-binary-${version}.zip`;
+const getFileName = (matchingVersion) => {
+    const oldGroovyFileName = `groovy-binary-${matchingVersion}.zip`;
     const newGroovyFileName = `apache-${oldGroovyFileName}`;
-    if (!parsedVersion || (0, semver_1.lt)(parsedVersion, FIRST_APACHE_GROOVY_VERSION)) {
-        (0, core_1.debug)(`Version ${version} lower than ${FIRST_APACHE_GROOVY_VERSION} or not parsable, use old groovy file name`);
+    if ((0, semver_1.lt)(matchingVersion, FIRST_APACHE_GROOVY_VERSION)) {
+        (0, core_1.debug)(`Version ${matchingVersion} is lower than ${FIRST_APACHE_GROOVY_VERSION} use old groovy file name format.`);
         return oldGroovyFileName;
     }
     return newGroovyFileName;
@@ -150,9 +149,6 @@ const downloadGroovy = (url) => __awaiter(void 0, void 0, void 0, function* () {
     const archivePath = yield (0, tool_cache_1.downloadTool)(url);
     const groovyPath = yield (0, tool_cache_1.extractZip)(archivePath);
     (0, core_1.debug)(`Extracted groovy zip to: ${groovyPath}`);
-    if (!archivePath || !groovyPath) {
-        throw new Error(`Unable to download groovy from ${url}`);
-    }
     return groovyPath;
 });
 
