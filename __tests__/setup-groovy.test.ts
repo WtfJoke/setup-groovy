@@ -30,4 +30,17 @@ describe('setup-groovy', () => {
       expect(await existsSync(path.join(groovyPath, 'groovy'))).toBe(true)
     }
   )
+
+  it("should throw an error when version can't be found", async () => {
+    const version = '0.0.1'
+    jest.spyOn(core, 'getInput').mockReturnValue(version)
+    jest.spyOn(core, 'error').mockImplementation()
+
+    await expect(setupGroovy()).rejects.toThrow(
+      `Unable to find matching Groovy version for: '0.0.1'`
+    )
+    expect(core.error).toBeCalledWith(
+      new Error("Unable to find matching Groovy version for: '0.0.1'")
+    )
+  })
 })
