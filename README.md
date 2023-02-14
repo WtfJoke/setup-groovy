@@ -5,6 +5,7 @@
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=WtfJoke_setup-groovy&metric=code_smells)](https://sonarcloud.io/dashboard?id=WtfJoke_setup-groovy)
 [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=WtfJoke_setup-groovy&metric=sqale_index)](https://sonarcloud.io/dashboard?id=WtfJoke_setup-groovy)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=WtfJoke_setup-groovy&metric=ncloc)](https://sonarcloud.io/dashboard?id=WtfJoke_setup-groovy)
+[![codecov](https://codecov.io/gh/WtfJoke/setup-groovy/branch/main/graph/badge.svg?token=3D0E2NTINZ)](https://codecov.io/gh/WtfJoke/setup-groovy)
 
 The `wtfjoke/setup-groovy` action is a JavaScript action that sets up [Apache Groovy](https://groovy-lang.org/) in your GitHub Actions workflow. by:
 
