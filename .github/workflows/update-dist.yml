@@ -2,6 +2,9 @@ name: "Update dist folder"
 on:
   push:
 
+permissions:
+  contents: write
+
 jobs:
   dist-changed:
     runs-on: ubuntu-latest
