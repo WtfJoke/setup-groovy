@@ -3412,7 +3412,7 @@ jest-changed-files@^29.5.0:
     execa "^5.0.0"
     p-limit "^3.1.0"
 
-jest-circus@29.5.0, jest-circus@^29.5.0:
+jest-circus@^29.5.0:
   version "29.5.0"
   resolved "https://registry.yarnpkg.com/jest-circus/-/jest-circus-29.5.0.tgz#b5926989449e75bff0d59944bae083c9d7fb7317"
   integrity sha512-gq/ongqeQKAplVxqJmbeUOJJKkW3dDNPY8PjhJ5G0lBRvu0e3EWGxGy5cI4LAGA7gV2UHCtWBI4EMXK8c9nQKA==
