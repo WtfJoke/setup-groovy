@@ -32,6 +32,7 @@ jobs:
         uses: peter-evans/create-pull-request@v5
         with:
           title: "🧹 Update dist folder"
+          commit-message: "🧹 Update dist folder"
           add-paths: dist/
       - name: Automerge PR
         if: ${{ env.EXIT_CODE_DIST_CHANGED == 1 }}
