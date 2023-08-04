@@ -11,13 +11,13 @@ describe('release', () => {
   it("should find the latest version that satisfies '2.x'", async () => {
     const version = await getMatchingVersion('2.x')
     expect(version).toBeDefined()
-    expect(version).toMatch(/^2\.\d\.\d*?/)
+    expect(version).toMatch(/^2\.\d+\.\d+/)
   })
 
   it('should find latest 2.x releases when excluding 3.0.0', async () => {
     const version = await getMatchingVersion('>=2.x <3.0.0')
     expect(version).toBeDefined()
-    expect(version).toMatch(/^2\.\d\.\d*?/)
+    expect(version).toMatch(/^2\.\d+\.\d+/)
   })
 
   it('should find 4.0.0-rc-2 pre-release', async () => {
