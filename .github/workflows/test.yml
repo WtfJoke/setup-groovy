@@ -1,4 +1,4 @@
-name: "CI"
+name: 'CI'
 on:
   pull_request:
   push:
@@ -11,7 +11,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version-file: ".nvmrc"
+          node-version-file: '.nvmrc'
       - run: |
           yarn install
       - run: |
@@ -28,5 +28,7 @@ jobs:
       - uses: ./
         with:
           groovy-version: 4.x
+      - name: Echo GROOVY_HOME
+        run: echo $GROOVY_HOME
       - name: Display groovy version
         run: groovy --version

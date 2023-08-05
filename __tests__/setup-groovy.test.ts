@@ -25,9 +25,11 @@ describe('setup-groovy', () => {
       jest.spyOn(core, 'getInput').mockReturnValue(version)
 
       const groovyPath = await setupGroovy()
+      const groovyHome = path.dirname(groovyPath)
 
       expect(groovyPath.endsWith(groovyExecutableFolderName)).toBe(true)
       expect(await existsSync(path.join(groovyPath, 'groovy'))).toBe(true)
+      expect(process.env['GROOVY_HOME']).toBe(groovyHome)
     }
   )
 

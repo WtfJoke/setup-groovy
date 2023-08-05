@@ -100,12 +100,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.setupGroovyVersion = exports.setupGroovy = void 0;
 const core_1 = __nccwpck_require__(2186);
 const tool_cache_1 = __nccwpck_require__(7784);
 const semver_1 = __nccwpck_require__(1383);
 const release_1 = __nccwpck_require__(878);
+const path_1 = __importDefault(__nccwpck_require__(1017));
 const GROOVY_BASE_URL = 'https://groovy.jfrog.io/artifactory/dist-release-local/groovy-zips';
 const FIRST_APACHE_GROOVY_VERSION = '2.4.4';
 const setupGroovy = () => __awaiter(void 0, void 0, void 0, function* () {
@@ -129,7 +133,10 @@ const setupGroovyVersion = (version) => __awaiter(void 0, void 0, void 0, functi
     const groovyBinaryFileName = getFileName(matchingVersion);
     const url = `${GROOVY_BASE_URL}/${groovyBinaryFileName}`;
     const groovyRootPath = yield downloadGroovy(url);
-    const groovyBinaryPath = `${groovyRootPath}/groovy-${matchingVersion}/bin`;
+    const groovyBinaryPath = path_1.default.join(groovyRootPath, `groovy-${matchingVersion}`, 'bin');
+    const groovyHomePath = path_1.default.dirname(groovyBinaryPath);
+    (0, core_1.debug)(`Setting 'GROOVY_HOME' environment variable to: ${groovyHomePath}`);
+    (0, core_1.exportVariable)('GROOVY_HOME', groovyHomePath);
     (0, core_1.debug)(`Adding '${groovyBinaryPath}' to PATH`);
     (0, core_1.addPath)(groovyBinaryPath);
     return groovyBinaryPath;
