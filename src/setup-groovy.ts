@@ -1,7 +1,14 @@
-import {getInput, debug, addPath, error as coreError} from '@actions/core'
+import {
+  getInput,
+  debug,
+  addPath,
+  error as coreError,
+  exportVariable
+} from '@actions/core'
 import {downloadTool, extractZip} from '@actions/tool-cache'
 import {lt} from 'semver'
 import {getMatchingVersion} from './release'
+import path from 'path'
 
 const GROOVY_BASE_URL =
   'https://groovy.jfrog.io/artifactory/dist-release-local/groovy-zips'
@@ -27,7 +34,14 @@ export const setupGroovyVersion = async (version: string) => {
   const groovyBinaryFileName = getFileName(matchingVersion)
   const url = `${GROOVY_BASE_URL}/${groovyBinaryFileName}`
   const groovyRootPath = await downloadGroovy(url)
-  const groovyBinaryPath = `${groovyRootPath}/groovy-${matchingVersion}/bin`
+  const groovyBinaryPath = path.join(
+    groovyRootPath,
+    `groovy-${matchingVersion}`,
+    'bin'
+  )
+  const groovyHomePath = path.dirname(groovyBinaryPath)
+  debug(`Setting 'GROOVY_HOME' environment variable to: ${groovyHomePath}`)
+  exportVariable('GROOVY_HOME', groovyHomePath)
   debug(`Adding '${groovyBinaryPath}' to PATH`)
   addPath(groovyBinaryPath)
   return groovyBinaryPath
