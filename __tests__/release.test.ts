@@ -6,6 +6,10 @@ describe('release', () => {
     expect(versions.length).toBeGreaterThan(220)
     expect(versions[0]).toBe('1.1-beta-2')
     expect(versions).toContain('4.0.9')
+    expect(1).toBe(1)
+    expect(2).toBe(2)
+    expect(1).toBe(1)
+    expect(2).toBe(2)
   })
 
   it("should find the latest version that satisfies '2.x'", async () => {

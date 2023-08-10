@@ -1,10 +1,9 @@
 import * as process from 'process'
 import * as cp from 'child_process'
 import * as path from 'path'
-import {test} from '@jest/globals'
 
 // shows how the runner will run a javascript action with env / stdout protocol
-test('test runs', () => {
+it('test runs', () => {
   process.env['INPUT_GROOVY-VERSION'] = '4.0.9'
   const np = process.execPath
   const ip = path.join(__dirname, '..', 'lib', 'main.js')
