@@ -19,7 +19,7 @@ This action can be run on `ubuntu-latest`, `windows-latest`, and `macos-latest` 
 
 ```yml
 steps:
-  - uses: wtfjoke/setup-groovy@v1
+  - uses: wtfjoke/setup-groovy@v2
     with:
       groovy-version: '4.x'
   - run: groovy --version
@@ -32,7 +32,7 @@ If there is a specific version of Groovy that you need and you don't want to wor
 ```yaml
 steps:
   - uses: actions/checkout@v3
-  - uses: wtfjoke/setup-groovy@v1
+  - uses: wtfjoke/setup-groovy@v2
     with:
       groovy-version: '4.0.9'
   - run: groovy HelloWorld.groovy
@@ -43,7 +43,7 @@ You can specify **only a major and minor version** if you are okay with the most
 ```yaml
 steps:
   - uses: actions/checkout@v3
-  - uses: wtfjoke/setup-groovy@v1
+  - uses: wtfjoke/setup-groovy@v2
     with:
       groovy-version: '4.0'
   - run: groovy HelloWorld.groovy
@@ -54,7 +54,7 @@ You can also use ranges that are specified in [semver](https://github.com/npm/no
 ```yaml
 steps:
   - uses: actions/checkout@v3
-  - uses: wtfjoke/setup-groovy@v1
+  - uses: wtfjoke/setup-groovy@v2
     with:
       groovy-version: '>=3.x <4.0.0'
   - run: groovy HelloWorld.groovy
