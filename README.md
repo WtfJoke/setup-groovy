@@ -49,7 +49,7 @@ steps:
   - run: groovy HelloWorld.groovy
 ```
 
-You can also use ranges that are specified in [semver](https://github.com/npm/node-semver#ranges), for example a [hypen-range](https://github.com/npm/node-semver#advanced-range-syntax):
+You can also use ranges that are specified in [semver](https://github.com/npm/node-semver#ranges), for example a [hyphen-range](https://github.com/npm/node-semver#advanced-range-syntax):
 
 ```yaml
 steps:
