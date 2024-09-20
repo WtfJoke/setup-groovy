@@ -34,7 +34,7 @@ jobs:
       - name: Create PR
         if: ${{ env.EXIT_CODE_DIST_CHANGED == 1 }}
         id: cpr
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v7
         with:
           title: '🧹 Update dist folder'
           commit-message: '🧹 Update dist folder'
