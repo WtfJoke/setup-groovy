@@ -1,4 +1,4 @@
-import {fetchAvailableVersions, getMatchingVersion} from '../src/release'
+import {fetchAvailableVersions, getMatchingVersion} from './release'
 
 describe('release', () => {
   it('should fetch versions', async () => {
