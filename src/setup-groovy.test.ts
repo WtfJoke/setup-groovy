@@ -1,11 +1,12 @@
+// eslint-disable-next-line import/no-namespace
 import * as core from '@actions/core'
 import {existsSync} from 'fs'
 import {rm} from 'fs/promises'
 import path from 'path'
-import {setupGroovy} from '../src/setup-groovy'
+import {setupGroovy} from './setup-groovy'
 
 const tempDir = path.join(__dirname, 'runner', 'temp')
-process.env['RUNNER_TEMP'] = tempDir
+process.env.RUNNER_TEMP = tempDir
 
 jest.setTimeout(30_000)
 
@@ -28,8 +29,8 @@ describe('setup-groovy', () => {
       const groovyHome = path.dirname(groovyPath)
 
       expect(groovyPath.endsWith(groovyExecutableFolderName)).toBe(true)
-      expect(await existsSync(path.join(groovyPath, 'groovy'))).toBe(true)
-      expect(process.env['GROOVY_HOME']).toBe(groovyHome)
+      expect(existsSync(path.join(groovyPath, 'groovy'))).toBe(true)
+      expect(process.env.GROOVY_HOME).toBe(groovyHome)
     }
   )
 
@@ -41,7 +42,7 @@ describe('setup-groovy', () => {
     await expect(setupGroovy()).rejects.toThrow(
       `Unable to find matching Groovy version for: '0.0.1'`
     )
-    expect(core.error).toBeCalledWith(
+    expect(core.error).toHaveBeenCalledWith(
       new Error("Unable to find matching Groovy version for: '0.0.1'")
     )
   })
