@@ -1,14 +1,14 @@
-import {setFailed} from '@actions/core'
-import {setupGroovy} from './setup-groovy'
+import { setFailed } from "@actions/core";
+import { setupGroovy } from "./setup-groovy";
 
 const run = async () => {
   try {
-    await setupGroovy()
+    await setupGroovy();
   } catch (error) {
     if (error instanceof Error) {
-      setFailed(error.message)
+      setFailed(error.message);
     }
   }
-}
+};
 
-void run()
+void run();

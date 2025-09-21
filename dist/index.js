@@ -49,15 +49,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.fetchAvailableVersions = exports.getMatchingVersion = void 0;
-const http_client_1 = __nccwpck_require__(4844);
 const core_1 = __nccwpck_require__(7484);
+const http_client_1 = __nccwpck_require__(4844);
 const fast_xml_parser_1 = __nccwpck_require__(591);
 const semver_1 = __nccwpck_require__(2088);
-const GROOVY_OLDER_RELEASES_URL = 'https://repo1.maven.org/maven2/org/codehaus/groovy/groovy/maven-metadata.xml';
-const GROOVY_CURRENT_URL = 'https://repo1.maven.org/maven2/org/apache/groovy/groovy/maven-metadata.xml';
-const http = new http_client_1.HttpClient('setup-groovy', undefined, {
+const GROOVY_OLDER_RELEASES_URL = "https://repo1.maven.org/maven2/org/codehaus/groovy/groovy/maven-metadata.xml";
+const GROOVY_CURRENT_URL = "https://repo1.maven.org/maven2/org/apache/groovy/groovy/maven-metadata.xml";
+const http = new http_client_1.HttpClient("setup-groovy", undefined, {
     allowRetries: true,
-    maxRetries: 3
+    maxRetries: 3,
 });
 const parser = new fast_xml_parser_1.XMLParser();
 const getMatchingVersion = (versionRange) => __awaiter(void 0, void 0, void 0, function* () {
@@ -105,20 +105,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.setupGroovyVersion = exports.setupGroovy = void 0;
+const node_path_1 = __importDefault(__nccwpck_require__(6760));
 const core_1 = __nccwpck_require__(7484);
 const tool_cache_1 = __nccwpck_require__(3472);
 const semver_1 = __nccwpck_require__(2088);
 const release_1 = __nccwpck_require__(9437);
-const path_1 = __importDefault(__nccwpck_require__(6928));
-const GROOVY_BASE_URL = 'https://groovy.jfrog.io/artifactory/dist-release-local/groovy-zips';
-const FIRST_APACHE_GROOVY_VERSION = '2.4.4';
+const GROOVY_BASE_URL = "https://groovy.jfrog.io/artifactory/dist-release-local/groovy-zips";
+const FIRST_APACHE_GROOVY_VERSION = "2.4.4";
 const setupGroovy = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const version = (0, core_1.getInput)('groovy-version');
+        const version = (0, core_1.getInput)("groovy-version");
         return yield (0, exports.setupGroovyVersion)(version);
     }
     catch (error) {
-        if (error instanceof Error || typeof error === 'string') {
+        if (error instanceof Error || typeof error === "string") {
             (0, core_1.error)(error);
         }
         throw error;
@@ -133,10 +133,10 @@ const setupGroovyVersion = (version) => __awaiter(void 0, void 0, void 0, functi
     const groovyBinaryFileName = getFileName(matchingVersion);
     const url = `${GROOVY_BASE_URL}/${groovyBinaryFileName}`;
     const groovyRootPath = yield downloadGroovy(url);
-    const groovyBinaryPath = path_1.default.join(groovyRootPath, `groovy-${matchingVersion}`, 'bin');
-    const groovyHomePath = path_1.default.dirname(groovyBinaryPath);
+    const groovyBinaryPath = node_path_1.default.join(groovyRootPath, `groovy-${matchingVersion}`, "bin");
+    const groovyHomePath = node_path_1.default.dirname(groovyBinaryPath);
     (0, core_1.debug)(`Setting 'GROOVY_HOME' environment variable to: ${groovyHomePath}`);
-    (0, core_1.exportVariable)('GROOVY_HOME', groovyHomePath);
+    (0, core_1.exportVariable)("GROOVY_HOME", groovyHomePath);
     (0, core_1.debug)(`Adding '${groovyBinaryPath}' to PATH`);
     (0, core_1.addPath)(groovyBinaryPath);
     return groovyBinaryPath;
@@ -31170,6 +31170,14 @@ module.exports = require("node:crypto");
 
 "use strict";
 module.exports = require("node:events");
+
+/***/ }),
+
+/***/ 6760:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("node:path");
 
 /***/ }),
 
