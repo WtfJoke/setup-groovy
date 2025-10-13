@@ -1,7 +1,6 @@
 import { type ExecFileSyncOptions, execFileSync } from "node:child_process";
 import { join } from "node:path";
 import { env, execPath } from "node:process";
-import { test } from "@jest/globals";
 
 // shows how the runner will run a javascript action with env / stdout protocol
 test.skip("runs", () => {
