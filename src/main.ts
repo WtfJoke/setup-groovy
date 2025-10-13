@@ -1,5 +1,5 @@
 import { setFailed } from "@actions/core";
-import { setupGroovy } from "./setup-groovy";
+import { setupGroovy } from "./setup-groovy.js";
 
 const run = async () => {
   try {
