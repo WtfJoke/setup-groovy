@@ -1,6 +1,15 @@
-import { fetchAvailableVersions, getMatchingVersion } from "./release";
+import * as core from "@actions/core";
+import { fetchAvailableVersions, getMatchingVersion } from "./release.js";
 
 describe("release", () => {
+  beforeEach(() => {
+    vi.spyOn(core, "debug").mockImplementation(vi.fn());
+  });
+
+  afterAll(() => {
+    vi.restoreAllMocks();
+  });
+
   it("should fetch versions", async () => {
     const versions = await fetchAvailableVersions();
     expect(versions.length).toBeGreaterThan(220);

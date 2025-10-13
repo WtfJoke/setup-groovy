@@ -8,7 +8,7 @@ import {
 } from "@actions/core";
 import { downloadTool, extractZip } from "@actions/tool-cache";
 import { lt } from "semver";
-import { getMatchingVersion } from "./release";
+import { getMatchingVersion } from "./release.js";
 
 const GROOVY_BASE_URL =
   "https://groovy.jfrog.io/artifactory/dist-release-local/groovy-zips";
