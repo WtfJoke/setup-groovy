@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "description": "Sets up Groovy for Github Actions",
-  "main": "lib/main.js",
+  "main": "lib/src/main.js",
+  "type": "module",
   "scripts": {
     "build": "tsc",
     "format": "npx biome format --write",

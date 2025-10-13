@@ -3,7 +3,7 @@ import { rm } from "node:fs/promises";
 import path from "node:path";
 import * as core from "@actions/core";
 import { vi } from "vitest";
-import { setupGroovy } from "./setup-groovy";
+import { setupGroovy } from "./setup-groovy.js";
 
 const tempDir = path.join(__dirname, "runner", "temp");
 process.env.RUNNER_TEMP = tempDir;
@@ -15,6 +15,11 @@ describe("setup-groovy", { timeout: 30_000 }, () => {
 
   beforeEach(() => {
     vi.resetAllMocks();
+    vi.spyOn(core, "debug").mockImplementation(vi.fn());
+  });
+
+  afterAll(() => {
+    vi.restoreAllMocks();
   });
 
   it.each(["4.0.9", "4.0.0-rc-2", "1.8.0-beta-1"])(
