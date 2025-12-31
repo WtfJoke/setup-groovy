@@ -33223,7 +33223,7 @@ function toNumber(str, options = {}){
         return parse_int(trimmedStr, 16);
     // }else if (options.oct && octRegex.test(str)) {
     //     return Number.parseInt(val, 8);
-    }else if (trimmedStr.search(/.+[eE].+/)!== -1) { //eNotation
+    }else if (trimmedStr.includes('e') || trimmedStr.includes('E')) { //eNotation
         return resolveEnotation(str,trimmedStr,options);
     // }else if (options.parseBin && binRegex.test(str)) {
     //     return Number.parseInt(val, 2);
