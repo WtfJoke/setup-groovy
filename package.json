@@ -30,7 +30,7 @@
   "author": "WtfJoke",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "2.0.2",
+    "@actions/core": "2.0.3",
     "@actions/github": "7.0.0",
     "@actions/http-client": "3.0.1",
     "@actions/io": "2.0.0",
