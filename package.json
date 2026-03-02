@@ -36,7 +36,7 @@
     "@actions/io": "2.0.0",
     "@actions/tool-cache": "2.0.2",
     "fast-xml-parser": "5.3.6",
-    "semver": "7.7.3"
+    "semver": "7.7.4"
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.14",
