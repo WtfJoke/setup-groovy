@@ -1,13 +1,13 @@
-import * as core from "@actions/core";
 import { fetchAvailableVersions, getMatchingVersion } from "./release.js";
+
+vi.mock("@actions/core", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("@actions/core")>();
+  return { ...actual, debug: vi.fn() };
+});
 
 describe("release", () => {
   beforeEach(() => {
-    vi.spyOn(core, "debug").mockImplementation(vi.fn());
-  });
-
-  afterAll(() => {
-    vi.restoreAllMocks();
+    vi.resetAllMocks();
   });
 
   it("should fetch versions", async () => {
