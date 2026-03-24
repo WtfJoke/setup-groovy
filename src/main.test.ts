@@ -6,7 +6,7 @@ import { env, execPath } from "node:process";
 test.skip("runs", () => {
   env["INPUT_GROOVY-VERSION"] = "4.0.9";
   const np = execPath;
-  const ip = join(__dirname, "..", "lib", "main.js");
+  const ip = join(__dirname, "..", "lib", "src", "main.js");
   const options: ExecFileSyncOptions = {
     env,
   };
