@@ -11,11 +11,11 @@ jobs:
   dist-changed:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6.0.3
         with:
           ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: Setup Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v6.4.0
         with:
           node-version-file: '.nvmrc'
           cache: 'npm'
@@ -34,7 +34,7 @@ jobs:
       - name: Create PR
         if: ${{ env.EXIT_CODE_DIST_CHANGED == 1 }}
         id: cpr
-        uses: peter-evans/create-pull-request@v8
+        uses: peter-evans/create-pull-request@v8.1.1
         with:
           title: '🧹 Update dist folder'
           commit-message: '🧹 Update dist folder'
