@@ -1,4 +1,4 @@
-name: 'Update dist folder'
+name: "Update dist folder"
 on:
   push:
     branches-ignore: renovate/*
@@ -17,11 +17,11 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v6.4.0
         with:
-          node-version-file: '.nvmrc'
-          cache: 'npm'
+          node-version-file: ".nvmrc"
+          cache: "npm"
       - name: Install dependencies
         run: |
-          npm install
+          npm ci --ignore-scripts
       - name: Package (update dist folder)
         run: |
           npm run update-dist
@@ -36,8 +36,8 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v8.1.1
         with:
-          title: '🧹 Update dist folder'
-          commit-message: '🧹 Update dist folder'
+          title: "🧹 Update dist folder"
+          commit-message: "🧹 Update dist folder"
           add-paths: dist/
       - name: Automerge PR
         if: ${{ env.EXIT_CODE_DIST_CHANGED == 1 }}
