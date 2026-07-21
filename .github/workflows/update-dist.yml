@@ -11,7 +11,7 @@ jobs:
   dist-changed:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6.0.3
+      - uses: actions/checkout@v7.0.0
         with:
           ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: Setup Node.js
