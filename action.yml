@@ -1,14 +1,14 @@
-name: 'Setup Groovy'
-description: 'Sets up Groovy for Github Actions'
-author: 'WtfJoke (Manuel)'
+name: "Setup Groovy"
+description: "Sets up Groovy for Github Actions"
+author: "WtfJoke (Manuel)"
 
 inputs:
-  groovy-version: 
-    description: 'The version of Groovy to install. Exact version or version range of Groovy. Using semver version range syntax. Examples: 4.x, 4.0.x, 4.0.9, 4.0.0-rc-1, etc.'
+  groovy-version:
+    description: "The version of Groovy to install. Exact version or version range of Groovy. Using semver version range syntax. Examples: 5.x, 4.x, 4.0.x, 4.0.9, 4.0.0-rc-1, etc."
     required: true
 runs:
-  using: 'node24'
-  main: 'dist/index.js'
+  using: "node24"
+  main: "dist/index.js"
 branding:
   icon: star
   color: blue

@@ -21,7 +21,7 @@ This action can be run on `ubuntu-latest`, `windows-latest`, and `macos-latest` 
 steps:
   - uses: wtfjoke/setup-groovy@v3
     with:
-      groovy-version: "4.x"
+      groovy-version: "5.x"
   - run: groovy --version
 ```
 
