@@ -18,15 +18,15 @@
     "rules": {
       "nursery": {
         "noFloatingPromises": "error",
-        "noMisusedPromises": "error",
-        "noShadow": "error",
-        "noUnnecessaryConditions": "error"
+        "noMisusedPromises": "error"
       },
       "style": {
         "useConsistentTypeDefinitions": "error"
       },
       "suspicious": {
-        "noNonNullAssertedOptionalChain": "error"
+        "noNonNullAssertedOptionalChain": "error",
+        "noShadow": "error",
+        "noUnnecessaryConditions": "error"
       }
     }
   },
