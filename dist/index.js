@@ -34952,7 +34952,7 @@ class XmlNode {
   }
 }
 
-;// CONCATENATED MODULE: ./node_modules/fast-xml-parser/node_modules/xml-naming/src/index.js
+;// CONCATENATED MODULE: ./node_modules/xml-naming/src/index.js
 /**
  * xml-naming
  * Validates XML Name productions as defined in the XML 1.0 and 1.1 specifications.
