@@ -42266,6 +42266,7 @@ function getPositionFromMatch(match) {
   return match.startIndex + match[1].length;
 }
 ;// CONCATENATED MODULE: ./node_modules/fast-xml-parser/src/xmlparser/XMLParser.js
+/* global Uint8Array */
 
 
 
@@ -42286,7 +42287,12 @@ class XMLParser {
      */
     parse(xmlData, validationOption) {
         if (typeof xmlData !== "string" && xmlData.toString) {
-            xmlData = xmlData.toString();
+            if (xmlData instanceof Uint8Array &&
+                !(typeof Buffer !== "undefined" && Buffer.isBuffer(xmlData))) {
+                xmlData = new TextDecoder("utf-8", { ignoreBOM: true }).decode(xmlData);
+            } else {
+                xmlData = xmlData.toString();
+            }
         } else if (typeof xmlData !== "string") {
             throw new Error("XML data is accepted in String or Bytes[] form.")
         }
